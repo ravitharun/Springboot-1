@@ -165,7 +165,7 @@ public 	ResponseEntity<Map<String,Object>>userinfo() {
 public ResponseEntity<SuccessResponse> GetUSERInfo(String username,String useremail) {
 	UserModel response_r=userRepo.findByUsernameAndUseremail(username, useremail);
     SuccessResponse response = new SuccessResponse();
-
+// check the user is nuill
     if (response_r == null) {
 
         response.setCode(404);
