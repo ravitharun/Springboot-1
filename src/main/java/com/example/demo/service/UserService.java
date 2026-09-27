@@ -165,10 +165,12 @@ public 	ResponseEntity<Map<String,Object>>userinfo() {
 public ResponseEntity<SuccessResponse> GetUSERInfo(String username,String useremail) {
 	UserModel response_r=userRepo.findByUsernameAndUseremail(username, useremail);
     SuccessResponse response = new SuccessResponse();
-// check the user is nuill
+// check the user is null
     if (response_r == null) {
 
         response.setCode(404);
+
+//        response.setCode(
         response.setMessage("User not found");
         response.setData(null);
 
@@ -186,4 +188,26 @@ public ResponseEntity<SuccessResponse> GetUSERInfo(String username,String userem
 }
 
 
+
+
+
+public ResponseEntity<SuccessResponse> Getuser_INFO_TEST_Query(String username,String useremail) {
+	UserModel  user=userRepo.findbyusername(username,useremail);
+	SuccessResponse sc=new SuccessResponse();
+	if(user==null) {
+		sc.setCode(400);
+		sc.setData(null);
+		sc.setMessage("usernot");
+		return ResponseEntity.status(400).body(sc);
+		
+	}
+	UserDto ur=new UserDto();
+	ur.setUserage(user.getUserage());
+	ur.setUsername(user.getUsername());
+	
+	sc.setCode(200);
+	sc.setData(ur);
+	sc.setMessage("user");
+	return ResponseEntity.status(200).body(sc);
+}
 }

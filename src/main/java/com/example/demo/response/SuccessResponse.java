@@ -1,4 +1,7 @@
 package com.example.demo.response;
+
+import com.example.demo.model.UserModel;
+
 public class SuccessResponse {
 
     private int code;
@@ -30,4 +33,6 @@ public class SuccessResponse {
     public UserDto getData() {
         return data;
     }
+
+
 }

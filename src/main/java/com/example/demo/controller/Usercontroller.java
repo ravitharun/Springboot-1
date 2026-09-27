@@ -63,5 +63,15 @@ public class Usercontroller {
 			  
 			    	
 			    	return userService.GetUSERInfo(username,useremail);
+
+			    }
+			    
+			    
+			    @GetMapping("/getuser")
+			    
+			    public ResponseEntity<SuccessResponse> Getuser_(@RequestParam("username")  String username, @RequestParam("useremail")String useremail) {
+			  
+			    	
+			    	return userService.Getuser_INFO_TEST_Query(username,useremail);
 			    }
 }
