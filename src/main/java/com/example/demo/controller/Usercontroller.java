@@ -37,7 +37,7 @@ public class Usercontroller {
         return userService.usercreateAccount(data);
 
     }
-//    
+
 //		    @GetMapping("/userid")
 //		    
 //		    public ResponseEntity<SuccessResponse> getUser(@Valid @RequestParam("userid") long userid) {

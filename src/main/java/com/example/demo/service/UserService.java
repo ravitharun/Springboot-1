@@ -1,6 +1,7 @@
 package com.example.demo.service;
 import  com.example.demo.response.SuccessResponse;
 import com.example.demo.response.UserDto;
+import com.example.demo.security.JwtService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,28 +25,29 @@ import com.example.demo.model.UserModel;
 public class UserService {
 	
 	private  UserRepository userRepo;
-	public UserService(UserRepository userRepo) {
+	private JwtService jwtService;
+	public UserService(UserRepository userRepo,JwtService jwtService) {
 		
 		this.userRepo=userRepo;
+		this.jwtService=jwtService;
 	}
 	
+//    private final JwtService jwtService;
+
+   
 	public ResponseEntity<Map<String, Object>> usercreateAccount(UserModel data) {
 
     Map<String, Object> response_api = new HashMap<>();
 
     try {
 
-        System.out.println("Username: " + data.getUsername());
-        System.out.println("Email: " + data.getUseremail());
-        System.out.println("Age: " + data.getUserage());
-        System.out.println("Password: " + data.getUserpassword());
+       
         if (data.getUsername() == null ||
             data.getUsername().trim().isEmpty()) {
 
             response_api.put("code", 400);
             response_api.put("message", "Name must not be empty");
             response_api.put("status", false);
-
             return ResponseEntity.status(400).body(response_api);
         }
 
@@ -76,13 +78,15 @@ public class UserService {
 
             return ResponseEntity.status(409).body(response_api);
         }
-
+       
         // Save user
         UserModel useraccount = userRepo.save(data);
+        String token = jwtService.generateToken(useraccount.getUsername());
 
         response_api.put("code", 201);
         response_api.put("message", "User account created successfully");
         response_api.put("User_account", useraccount);
+        response_api.put("token", token);
 
         return ResponseEntity.status(201).body(response_api);
 
