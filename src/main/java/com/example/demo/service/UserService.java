@@ -1,36 +1,29 @@
 package com.example.demo.service;
-import  com.example.demo.response.SuccessResponse;
-import com.example.demo.response.UserDto;
-import com.example.demo.security.JwtService;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
-import org.aspectj.apache.bcel.classfile.Module.Uses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Repository.UserRepository;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.model.UserModel;
+import  com.example.demo.response.SuccessResponse;
+import com.example.demo.response.UserDto;
+import com.example.demo.security.JwtService;
 
 @Service
 public class UserService {
-	
+	@Autowired
 	private  UserRepository userRepo;
+	@Autowired
 	private JwtService jwtService;
-	public UserService(UserRepository userRepo,JwtService jwtService) {
-		
-		this.userRepo=userRepo;
-		this.jwtService=jwtService;
-	}
+
 	
 //    private final JwtService jwtService;
 

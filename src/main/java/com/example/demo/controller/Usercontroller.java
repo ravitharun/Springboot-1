@@ -1,10 +1,8 @@
 package com.example.demo.controller;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,17 +18,14 @@ import com.example.demo.model.UserModel;
 import com.example.demo.response.SuccessResponse;
 import com.example.demo.service.UserService;
 
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping("/api/user")
 @CrossOrigin(origins = "http://localhost:5173")
 public class Usercontroller {
+	@Autowired
 	private UserService userService;
 
-	public Usercontroller(UserService userService) {
-	    this.userService = userService;
-	}
+
 	
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> userLogin(@RequestBody UserModel data) {
