@@ -1,0 +1,80 @@
+package com.example.demo.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+@Entity
+public class UserModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long userid;
+
+//    @NotNull
+    private String username;
+
+    @Email
+    @Column(unique = true)
+    private String useremail;
+
+    @Min(value = 1, message = "Age must be at least 1")
+    @Max(value = 60, message = "Age must be at most 60")
+    private int userage;
+
+    @Size(min = 5,message = "", max = 10)
+//    @Pattern(regexp = "^[A-za-z0-9]{10}$")
+    private String userpassword;
+
+    
+    public long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(long userid) {
+        this.userid = userid;
+    }
+    // username
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    // useremail
+    public String getUseremail() {
+        return useremail;
+    }
+
+    public void setUseremail(String useremail) {
+        this.useremail = useremail;
+    }
+
+    // userpassword
+    public String getUserpassword() {
+        return userpassword;
+    }
+
+    public void setUserpassword(String userpassword) {
+        this.userpassword = userpassword;
+    }
+
+    // userage
+    public int getUserage() {
+        return userage;
+    }
+
+    public void setUserage(int userage) {
+        this.userage = userage;
+    }
+}
