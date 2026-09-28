@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import com.example.demo.exception.UserAge;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.response.ErrorResponse;
 
@@ -70,6 +72,16 @@ public class GlobalExceptionHandler {
         response.setMessage(ex.getMessage());
 
         return ResponseEntity.status(response.getCode()).body(response);
+    }
+    
+    @ExceptionHandler(UserAge.class)
+    
+    public ResponseEntity<ErrorResponse> handelUserAge(UserAge userage) {
+    	ErrorResponse err=new ErrorResponse(); 
+    	err.setCode(400);
+    	err.setMessage("user id not found");
+    	return ResponseEntity.status(400).body(err);
+    	
     }
     
 }

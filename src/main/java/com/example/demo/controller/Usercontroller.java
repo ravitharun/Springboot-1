@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -68,5 +69,13 @@ public class Usercontroller {
 			  
 			    	
 			    	return userService.Getuser_INFO_TEST_Query(username,useremail);
+			    }
+			    
+			    
+			    @GetMapping("/check/email")
+			    public ResponseEntity<Map<String, Object>> GetUseremail(@RequestParam("id") long userid) {
+		
+			    	return userService.userEmailCheck(userid);
+			    	
 			    }
 }

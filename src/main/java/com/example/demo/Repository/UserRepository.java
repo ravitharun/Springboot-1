@@ -14,5 +14,6 @@ public interface  UserRepository extends JpaRepository<UserModel,Long>{
 	UserModel findByUsernameAndUseremail(String username, String useremail);
 	@Query("SELECT u FROM UserModel u WHERE u.username = :username ANd u.useremail=:useremail")
 	UserModel findbyusername(@Param("username") String username,@Param("useremail") String useremail);
+	
 
 }

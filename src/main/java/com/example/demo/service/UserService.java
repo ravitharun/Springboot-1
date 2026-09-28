@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Repository.UserRepository;
+import com.example.demo.exception.UserAge;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.model.UserModel;
 import  com.example.demo.response.SuccessResponse;
@@ -25,7 +27,7 @@ public class UserService {
 	private JwtService jwtService;
 
 	
-//    private final JwtService jwtService;
+
 
    
 	public ResponseEntity<Map<String, Object>> usercreateAccount(UserModel data) {
@@ -194,7 +196,7 @@ public ResponseEntity<SuccessResponse> Getuser_INFO_TEST_Query(String username,S
 	if(user==null) {
 		sc.setCode(400);
 		sc.setData(null);
-		sc.setMessage("usernot");
+		sc.setMessage("user not found");
 		return ResponseEntity.status(400).body(sc);
 		
 	}
@@ -206,5 +208,27 @@ public ResponseEntity<SuccessResponse> Getuser_INFO_TEST_Query(String username,S
 	sc.setData(ur);
 	sc.setMessage("user");
 	return ResponseEntity.status(200).body(sc);
+}
+
+
+public ResponseEntity<Map<String ,Object>> userEmailCheck(long userid) {
+	UserModel user=userRepo.findById(userid).orElseThrow(() -> new UserAge("User not found"+userid));;
+	System.err.println(user);
+	System.err.println(userid);
+	
+	System.err.println(user.getUserage());
+	System.err.println(user.getUsername());
+	System.err.println(user.getUseremail());
+	Map <String, Object> mp=new HashMap<>();
+	UserDto dto=new UserDto();
+	dto.setUserage(user.getUserage());
+	dto.setUseremail(user.getUseremail());
+	dto.setUsername(user.getUsername());
+//	dto.setUserid(1000);
+	
+	mp.put("code",200);
+	mp.put("userinfo", user);
+	mp.put("userDto", dto);
+	return  ResponseEntity.status(HttpStatus.OK).body(mp);
 }
 }
