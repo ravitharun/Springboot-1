@@ -33,7 +33,7 @@ public class UserModel {
     @Max(value = 60, message = "Age must be at most 60")
     private int userage;
 
-    @Size(min = 5,message = "", max = 10)
+    @Size(min = 5,message = "password length >", max = 200)
 //    @Pattern(regexp = "^[A-za-z0-9]{10}$")
     private String userpassword;
 

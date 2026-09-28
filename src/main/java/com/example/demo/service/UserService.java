@@ -3,12 +3,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Repository.UserRepository;
@@ -19,18 +19,19 @@ import  com.example.demo.response.SuccessResponse;
 import com.example.demo.response.UserDto;
 import com.example.demo.security.JwtService;
 
+import jakarta.validation.Valid;
+
 @Service
 public class UserService {
 	@Autowired
 	private  UserRepository userRepo;
 	@Autowired
 	private JwtService jwtService;
-
-	
-
+@Autowired
+	private PasswordEncoder passwordEncoder;
 
    
-	public ResponseEntity<Map<String, Object>> usercreateAccount(UserModel data) {
+	public ResponseEntity<Map<String, Object>> usercreateAccount(@Valid UserModel data) {
 
     Map<String, Object> response_api = new HashMap<>();
 
@@ -73,8 +74,9 @@ public class UserService {
 
             return ResponseEntity.status(409).body(response_api);
         }
-       
         // Save user
+        String encodedPassword = passwordEncoder.encode(data.getUserpassword());
+        data.setUserpassword(encodedPassword);
         UserModel useraccount = userRepo.save(data);
         String token = jwtService.generateToken(useraccount.getUsername());
 
