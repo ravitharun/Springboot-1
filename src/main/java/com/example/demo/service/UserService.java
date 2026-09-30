@@ -6,7 +6,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,14 +25,14 @@ import jakarta.validation.Valid;
 
 @Service
 public class UserService {
-	@Autowired
+	@Autowired 
 	private  UserRepository userRepo;
 	@Autowired
-	private JwtService jwtService;
+	private JwtService jwtService;  
 @Autowired
 	private PasswordEncoder passwordEncoder;
 
-   
+
 	public ResponseEntity<Map<String, Object>> usercreateAccount(@Valid UserModel data) {
 
     Map<String, Object> response_api = new HashMap<>();
@@ -126,7 +128,7 @@ public class UserService {
 	    response.setMessage("User found");
 	    response.setData(user);
 
-	    return ResponseEntity.status(200).body(response);
+	    return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
 
@@ -226,7 +228,7 @@ public ResponseEntity<Map<String ,Object>> userEmailCheck(long userid) {
 	dto.setUserage(user.getUserage());
 	dto.setUseremail(user.getUseremail());
 	dto.setUsername(user.getUsername());
-//	dto.setUserid(1000);
+
 	
 	mp.put("code",200);
 	mp.put("userinfo", user);

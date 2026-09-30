@@ -79,7 +79,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handelUserAge(UserAge userage) {
     	ErrorResponse err=new ErrorResponse(); 
     	err.setCode(400);
-    	err.setMessage("user id not found");
+    	err.setMessage("user id not found".toUpperCase());
     	return ResponseEntity.status(400).body(err);
     	
     }

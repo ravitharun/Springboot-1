@@ -2,11 +2,15 @@ package com.example.demo.model;
 
 
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -28,7 +32,17 @@ public class UserModel {
     @Email
     @Column(unique = true)
     private String useremail;
-
+    
+    
+    
+    
+    @OneToMany
+    @JoinColumn(name = "userid")
+    private List<Cart> cartItems;
+    
+    
+    
+    
     @Min(value = 1, message = "Age must be at least 1")
     @Max(value = 60, message = "Age must be at most 60")
     private int userage;
@@ -80,4 +94,9 @@ public class UserModel {
     public void setUserage(int userage) {
         this.userage = userage;
     }
+
+	public List<Cart> getCartItems() {
+		// TODO Auto-generated method stub
+		return cartItems;
+	}
 }

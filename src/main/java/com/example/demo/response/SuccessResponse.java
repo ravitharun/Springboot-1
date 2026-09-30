@@ -6,7 +6,7 @@ public class SuccessResponse {
 
     private int code;
     private String message;
-    private UserDto data;
+    private CartDto data;
 
     // Setters
     public void setCode(int code) {
@@ -17,7 +17,7 @@ public class SuccessResponse {
         this.message = message;
     }
 
-    public void setData(UserDto data) {
+    public void setData(CartDto data) {
         this.data = data;
     }
 
@@ -29,7 +29,7 @@ public class SuccessResponse {
         return message;
     }
 
-    public UserDto getData() {
+    public CartDto getData() {
         return data;
     }
 
