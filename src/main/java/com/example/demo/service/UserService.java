@@ -13,10 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.Repository.UserProfileRepo;
 import com.example.demo.Repository.UserRepository;
 import com.example.demo.exception.UserAge;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.model.UserModel;
+import com.example.demo.model.UserProfileModel;
+import com.example.demo.response.ProfileCreationDto;
 import  com.example.demo.response.SuccessResponse;
 import com.example.demo.response.UserDto;
 import com.example.demo.security.JwtService;
@@ -31,7 +34,8 @@ public class UserService {
 	private JwtService jwtService;  
 @Autowired
 	private PasswordEncoder passwordEncoder;
-
+@Autowired
+private UserProfileRepo userUserProfileRepo;
 
 	public ResponseEntity<Map<String, Object>> usercreateAccount(@Valid UserModel data) {
 
@@ -126,7 +130,7 @@ public class UserService {
 
 	    response.setCode(200);
 	    response.setMessage("User found");
-	    response.setData(user);
+//	    response.setData(user);
 
 	    return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
@@ -149,7 +153,6 @@ public 	ResponseEntity<Map<String,Object>>userinfo() {
 
 	    UserDto dto = new UserDto();
 
-//	    dto.setUserid(user.getUserid());
 	    dto.setUsername(user.getUsername());
 	    dto.setUseremail(user.getUseremail());
 	    dto.setUserage(user.getUserage());
@@ -186,7 +189,7 @@ public ResponseEntity<SuccessResponse> GetUSERInfo(String username,String userem
 
     response.setCode(200);
     response.setMessage("userinfo");
-    response.setData(userdto);
+//    response.setData(userdto);
 	return ResponseEntity.status(200).body(response);
 }
 
@@ -194,25 +197,25 @@ public ResponseEntity<SuccessResponse> GetUSERInfo(String username,String userem
 
 
 
-public ResponseEntity<SuccessResponse> Getuser_INFO_TEST_Query(String username,String useremail) {
-	UserModel  user=userRepo.findbyusername(username,useremail);
-	SuccessResponse sc=new SuccessResponse();
-	if(user==null) {
-		sc.setCode(400);
-		sc.setData(null);
-		sc.setMessage("user not found");
-		return ResponseEntity.status(400).body(sc);
-		
-	}
-	UserDto ur=new UserDto();
-	ur.setUserage(user.getUserage());
-	ur.setUsername(user.getUsername());
-	
-	sc.setCode(200);
-	sc.setData(ur);
-	sc.setMessage("user");
-	return ResponseEntity.status(200).body(sc);
-}
+//public ResponseEntity<SuccessResponse> Getuser_INFO_TEST_Query(String username,String useremail) {
+//	UserModel  user=userRepo.findbyusername(username,useremail);
+//	SuccessResponse sc=new SuccessResponse();
+//	if(user==null) {
+//		sc.setCode(400);
+//		sc.setData(null);
+//		sc.setMessage("user not found");
+//		return ResponseEntity.status(400).body(sc);
+//		
+//	}
+//	UserDto ur=new UserDto();
+//	ur.setUserage(user.getUserage());
+//	ur.setUsername(user.getUsername());
+//	
+//	sc.setCode(200);
+//	sc.setData(ur);
+//	sc.setMessage("user");
+//	return ResponseEntity.status(200).body(sc);
+//}
 
 
 public ResponseEntity<Map<String ,Object>> userEmailCheck(long userid) {
@@ -234,5 +237,42 @@ public ResponseEntity<Map<String ,Object>> userEmailCheck(long userid) {
 	mp.put("userinfo", user);
 	mp.put("userDto", dto);
 	return  ResponseEntity.status(HttpStatus.OK).body(mp);
+}
+
+
+
+
+//Create a new Profile
+public ProfileCreationDto NewProfile(ProfileCreationDto userinfo) {
+
+    UserProfileModel profile = new UserProfileModel();
+//System.err.println(userinfo.getUser_id());
+    profile.setLoc(userinfo.getLoc());
+    profile.setProfileurl(userinfo.getProfileurl());
+    profile.setUser_id(userinfo.getUser_id());
+    profile.setUseremail(userinfo.getUseremail());
+    profile.setUsername(userinfo.getUsername());
+
+
+    userUserProfileRepo.save(profile);
+
+    return userinfo;
+}
+
+//getProfile information 
+
+public ResponseEntity<Map<String, Object>> GetUserInfo_profile(long userid) {
+	UserProfileModel user=	userUserProfileRepo.findByUser_Userid(userid);
+	Map<String,Object > resp=new HashMap<>();
+	
+	if(user==null) {
+		resp.put("message", "no user found");
+		System.err.println(resp);
+		return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(resp);
+	}
+	 resp.put("message", user);
+		
+	return ResponseEntity.status(HttpStatus.OK).body(resp);
+
 }
 }

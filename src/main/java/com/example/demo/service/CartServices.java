@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import com.example.demo.model.Cart;
 import com.example.demo.model.OrderModel;
 import com.example.demo.model.UserModel;
 import com.example.demo.response.CartDto;
+import com.example.demo.response.ErrorResponse;
 import com.example.demo.response.SuccessResponse;
 
 @Service
@@ -24,14 +27,15 @@ public class CartServices {
 	
 	public ResponseEntity<SuccessResponse> User_AddCart(CartDto userOrder) {
 		
-		CartDto cart=new CartDto();
-		Cart c=new Cart();
 		SuccessResponse sc=new SuccessResponse();
+		Cart c=new Cart();
 		c.setPid(userOrder.getPid());
 		c.setUserid(userOrder.getUserid());
+		
+		repoTOcart.save(c);
+		CartDto cart=new CartDto();
 		cart.setPid(userOrder.getPid());
 		cart.setUserid(userOrder.getUserid());
-		repoTOcart.save(c);
 		sc.setCode(200);
 		sc.setData(cart);
 		sc.setMessage("added to cart");
@@ -43,17 +47,26 @@ public class CartServices {
 	
 	
 
-	public ResponseEntity<List<Cart>> getUserCartItems(long userid) {
+	public ResponseEntity<ErrorResponse> getUserCartItems(long userid) {
 
+		
+		ErrorResponse err=new ErrorResponse();
+		
 	    UserModel user = userRepository.findById(userid).orElse(null);
 
-	    if (user == null) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	    if (user == null) 
+	    {
+	    	err.setCode(400);
+			err.setMessage("user id not fund");
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	    }
 
 	    List<Cart> cartItems = user.getCartItems();
+	    Map<K, V> response=new HashMap<>();
 
-	    return ResponseEntity.ok(cartItems);
+//	    return ResponseEntity.ok(cartItems);
+	    return ResponseEntity.status(HttpStatus.OK).body(sc);
+	    
 	}
 
 

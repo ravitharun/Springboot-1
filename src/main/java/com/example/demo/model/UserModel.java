@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -42,7 +43,9 @@ public class UserModel {
     
     
     
-    
+    @OneToOne
+    @JoinColumn(name = "userid", referencedColumnName = "user_id")
+    private UserProfileModel profile;
     @Min(value = 1, message = "Age must be at least 1")
     @Max(value = 60, message = "Age must be at most 60")
     private int userage;

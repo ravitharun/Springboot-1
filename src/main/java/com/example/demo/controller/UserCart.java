@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Cart;
+import com.example.demo.model.UserProfileModel;
 import com.example.demo.response.CartDto;
+import com.example.demo.response.ErrorResponse;
+import com.example.demo.response.ProfileCreationDto;
 import com.example.demo.response.SuccessResponse;
 import com.example.demo.service.CartServices;
+import com.example.demo.service.UserService;
 
 
 
@@ -25,6 +30,8 @@ public class UserCart {
 	
 	@Autowired
 	private CartServices AddtoCart;
+	@Autowired
+	private UserService userService;
 	@PostMapping("/Add/Cart")
 	public ResponseEntity <SuccessResponse >AddTOCart(
 			  @RequestBody CartDto userOrder) {
@@ -33,13 +40,30 @@ public class UserCart {
 	}
 	@GetMapping("/getcartitem")
 	
-	public ResponseEntity<List<Cart>> GetCartItem(@RequestParam("userid") long userid) {
+	public ResponseEntity<ErrorResponse> GetCartItem(@RequestParam("userid") long userid) {
 		
 		
 		
 		return AddtoCart.getUserCartItems(userid);
 	}
 	
+	
+	
+	
+	@PostMapping("/add/Profile")
+	
+	public ProfileCreationDto AddProfile(@RequestBody ProfileCreationDto userinfo ) {
+		
+		return userService.NewProfile(userinfo);
+	}
+	
+	@GetMapping("/getProfile")
+	
+	public ResponseEntity<Map<String, Object>>GetUserProfile(@RequestParam("userid") long userid) {
+		
+		
+		return userService.GetUserInfo_profile(userid);
+	}
 	
 	
 	
