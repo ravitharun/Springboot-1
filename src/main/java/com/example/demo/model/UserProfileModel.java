@@ -28,6 +28,7 @@ private String Profileurl;
     insertable = false,
     updatable = false
 )
+//private UserModel user;
 private UserModel user;
 public long getUser_id() {
 	return user_id;

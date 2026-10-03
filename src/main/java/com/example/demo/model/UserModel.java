@@ -36,16 +36,18 @@ public class UserModel {
     
     
     
+//    
+//    @OneToMany
+//    @JoinColumn(name = "userid")
+//    private List<Cart> cartItems;
+//    
     
-    @OneToMany
-    @JoinColumn(name = "userid")
-    private List<Cart> cartItems;
     
-    
-    
-    @OneToOne
-    @JoinColumn(name = "userid", referencedColumnName = "user_id")
+    @OneToOne(mappedBy = "user")
     private UserProfileModel profile;
+
+    
+    
     @Min(value = 1, message = "Age must be at least 1")
     @Max(value = 60, message = "Age must be at most 60")
     private int userage;
@@ -98,8 +100,13 @@ public class UserModel {
         this.userage = userage;
     }
 
-	public List<Cart> getCartItems() {
+	public UserProfileModel getProfile() {
 		// TODO Auto-generated method stub
-		return cartItems;
+		return profile;
 	}
+
+//	public List<Cart> getCartItems() {
+//		// TODO Auto-generated method stub
+//		return cartItems;
+//	}
 }

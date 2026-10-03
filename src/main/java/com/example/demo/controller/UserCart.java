@@ -61,7 +61,7 @@ public class UserCart {
 	
 	public ResponseEntity<Map<String, Object>>GetUserProfile(@RequestParam("userid") long userid) {
 		
-		
+		System.err.println(userid);
 		return userService.GetUserInfo_profile(userid);
 	}
 	

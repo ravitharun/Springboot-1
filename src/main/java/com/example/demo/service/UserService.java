@@ -259,20 +259,18 @@ public ProfileCreationDto NewProfile(ProfileCreationDto userinfo) {
     return userinfo;
 }
 
-//getProfile information 
+//get Profile information 
 
 public ResponseEntity<Map<String, Object>> GetUserInfo_profile(long userid) {
-	UserProfileModel user=	userUserProfileRepo.findByUser_Userid(userid);
-	Map<String,Object > resp=new HashMap<>();
-	
-	if(user==null) {
-		resp.put("message", "no user found");
-		System.err.println(resp);
-		return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(resp);
-	}
-	 resp.put("message", user);
-		
-	return ResponseEntity.status(HttpStatus.OK).body(resp);
 
+    UserModel user = userRepo.findByUserid(userid);
+
+    Map<String, Object> resp = new HashMap<>();
+
+    UserProfileModel profile = user.getProfile();
+
+    resp.put("messages", profile);
+
+    return ResponseEntity.status(HttpStatus.OK).body(resp);
 }
 }
