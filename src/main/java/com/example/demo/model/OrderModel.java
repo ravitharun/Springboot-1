@@ -16,10 +16,8 @@ public class OrderModel {
 
     @NotNull
     private String ProductName;
-
     @NotNull
     private double ProductPrice;
-
     @NotNull
     private String ProductBrand;
 

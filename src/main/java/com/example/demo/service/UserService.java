@@ -32,8 +32,8 @@ public class UserService {
 	private  UserRepository userRepo;
 	@Autowired
 	private JwtService jwtService;  
-@Autowired
-	private PasswordEncoder passwordEncoder;
+//@Autowired
+//	private PasswordEncoder passwordEncoder;
 @Autowired
 private UserProfileRepo userUserProfileRepo;
 
@@ -81,8 +81,8 @@ private UserProfileRepo userUserProfileRepo;
             return ResponseEntity.status(409).body(response_api);
         }
         // Save user
-        String encodedPassword = passwordEncoder.encode(data.getUserpassword());
-        data.setUserpassword(encodedPassword);
+//        String encodedPassword = passwordEncoder.encode(data.getUserpassword());
+//        data.setUserpassword(encodedPassword);
         UserModel useraccount = userRepo.save(data);
         String token = jwtService.generateToken(useraccount.getUsername());
 
@@ -264,9 +264,14 @@ public ProfileCreationDto NewProfile(ProfileCreationDto userinfo) {
 public ResponseEntity<Map<String, Object>> GetUserInfo_profile(long userid) {
 
     UserModel user = userRepo.findByUserid(userid);
-
     Map<String, Object> resp = new HashMap<>();
+if(user==null) {
 
+	resp.put("code", 404);
+	resp.put("message", "user not found");
+	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resp);
+}
+    
     UserProfileModel profile = user.getProfile();
 
     resp.put("messages", profile);

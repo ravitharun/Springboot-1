@@ -62,14 +62,14 @@ public class Usercontroller {
 
 			    }
 			    
-			    
-			    @GetMapping("/getuser")
-			    
-			    public ResponseEntity<SuccessResponse> Getuser_(@RequestParam("username")  String username, @RequestParam("useremail")String useremail) {
-			  
-			    	
-			    	return userService.Getuser_INFO_TEST_Query(username,useremail);
-			    }
+//			    
+//			    @GetMapping("/getuser")
+//			    
+//			    public ResponseEntity<SuccessResponse> Getuser_(@RequestParam("username")  String username, @RequestParam("useremail")String useremail) {
+//			  
+//			    	
+//			    	return userService.Getuser_INFO_TEST_Query(username,useremail);
+//			    }
 			    
 			    
 			    @GetMapping("/check/email")

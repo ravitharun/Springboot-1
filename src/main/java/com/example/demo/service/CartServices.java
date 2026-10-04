@@ -61,11 +61,11 @@ public class CartServices {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	    }
 
-	    List<Cart> cartItems = user.getCartItems();
-	    Map<K, V> response=new HashMap<>();
+//	    List<Cart> cartItems = user.getCartItems();
+//	    Map<K, V> response=new HashMap<>();
 
 //	    return ResponseEntity.ok(cartItems);
-	    return ResponseEntity.status(HttpStatus.OK).body(sc);
+	    return ResponseEntity.status(HttpStatus.OK).body(null);
 	    
 	}
 

@@ -1,10 +1,12 @@
 package com.example.demo.service;
-
+import org.springframework.data.domain.Page;
+//import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.*;
-import java.util.stream.Stream;
+//import java.util.stream.Stream;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
+//import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,23 +23,16 @@ public class ProductSerices {
 	}
 	
 //	Get All Products
-	public ResponseEntity<Map<String, Object>> Getprodutcs() {
+	public ResponseEntity<Map<String, Object>> Getprodutcs(Pageable pageable) {
 		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		Map<String, Object> response_api=new HashMap<>();
-		List<OrderModel> productsdata=productRepo.findAll();
-		response_api.put("code",200);
+		Page<OrderModel> productsdata=productRepo.findAll(pageable);
+		response_api.put("total Products",productsdata.getSize());
+		response_api.put("code",HttpStatus.OK);
 		response_api.put("message","fetched the all products");
 		response_api.put("status",true);
 		response_api.put("Products",productsdata);
-		response_api.put("total Products",productsdata.size());
 		return ResponseEntity.status(HttpStatus.OK).body(response_api);
 	}
 	

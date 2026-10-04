@@ -1,5 +1,6 @@
 package com.example.demo.controller;
-
+//import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.*;
 
 import org.springframework.http.ResponseEntity;
@@ -23,14 +24,15 @@ public class ProductController {
 	public ProductController(ProductSerices productSerices) {
 		this.productSerices =productSerices;
 	}
+
+	
 //	GetAllProducts
-	
-	
 	@GetMapping("/")
 
-	public ResponseEntity<Map<String, Object>> GetAllProducts() {
+	public ResponseEntity<Map<String, Object>> GetAllProducts(Pageable pageable) {
+		System.err.println(pageable);
 
-		return productSerices.Getprodutcs();
+		return productSerices.Getprodutcs(pageable);
 	}
 
 	
