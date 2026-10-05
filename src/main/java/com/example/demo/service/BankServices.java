@@ -1,12 +1,16 @@
 package com.example.demo.service;
 
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Repository.BankRepo;
 import com.example.demo.model.BankModel;
+import com.example.demo.response.ErrorResponse;
 import com.example.demo.response.bankAccountDto;
 
 import jakarta.transaction.Transactional;
@@ -18,8 +22,25 @@ private BankRepo bnkRepo;
 
 
 
-public bankAccountDto  AccountCreation(bankAccountDto bank) {
+public ResponseEntity<?>  AccountCreation(bankAccountDto bank) {
 try {
+	
+	System.err.println(bank.getAccount_number());
+	System.err.println(bank.getAccountHoldername());	
+	System.err.println(bank.getBackName());
+	System.err.println(bank.getBalance());
+	
+	if(bank.getAccount_number()==0) {
+		
+		
+		ErrorResponse err=new ErrorResponse();
+		err.setCode(404);
+		err.setMessage("enter your vaild account number ");
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+	}
+	
+	
+	System.err.println("check tese ----");
     BankModel account = new BankModel();
 
     account.setAccount_number(bank.getAccount_number());
@@ -29,11 +50,11 @@ try {
 
     bnkRepo.save(account);
 
-    return bank;
+    return ResponseEntity.status(HttpStatus.OK).body(bank);
 } catch (Exception e) {
 	System.err.println(e.getMessage());
 }
-return bank;
+return ResponseEntity.status(HttpStatus.OK).body(bank);
 }
 
 
@@ -45,6 +66,8 @@ public String TransferMoney(long user_id_from,long user_id_to,double transferMon
 
 	BankModel receiver = bnkRepo.findById(user_id_to)
 	        .orElseThrow();
+	
+
 	if(transferMoney>=100000) {
 		
 		return "U cant transfer the Money above 1 lakh"; 

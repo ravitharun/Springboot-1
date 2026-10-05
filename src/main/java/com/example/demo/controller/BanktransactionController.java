@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,8 +35,8 @@ public class BanktransactionController {
 	
 	
 	
-	public bankAccountDto AddAccount(@RequestBody bankAccountDto bank) {
-
+	public ResponseEntity<?> AddAccount(@RequestBody bankAccountDto bank) {
+System.err.println(bank.getAccount_number()+"accAccount_number");
 		return bnkserv.AccountCreation(bank);
 	}
 	
