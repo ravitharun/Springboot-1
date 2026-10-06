@@ -2,6 +2,10 @@ package com.example.demo.Repository;
 
 
 import com.example.demo.model.UserModel;
+import com.example.demo.response.DtoProjection;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +16,22 @@ public interface  UserRepository extends JpaRepository<UserModel,Long>{
 	@Query("SELECT u FROM UserModel u WHERE u.username = :username ANd u.useremail=:useremail")
 	UserModel findbyusername(@Param("username") String username,@Param("useremail") String useremail);
 	UserModel findByUserid(long userid);
+	@Query("""
+		    SELECT DISTINCT u
+		    FROM UserModel u
+		    JOIN FETCH u.cartItems c
+		    JOIN FETCH c.product
+		""")
+	List<UserModel> findUsersWithOrders();
+	
+	
+	@Query("""
+		    SELECT u.username AS username,
+		           u.useremail AS useremail
+		    FROM UserModel u
+		""")
+		List<DtoProjection> getRequiredData();
+	
 	
 
 }

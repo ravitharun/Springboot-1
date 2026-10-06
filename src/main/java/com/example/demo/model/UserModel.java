@@ -37,9 +37,9 @@ public class UserModel {
     
     
 //    
-//    @OneToMany
-//    @JoinColumn(name = "userid")
-//    private List<Cart> cartItems;
+    @OneToMany
+    @JoinColumn(name = "userid")
+    private List<Cart> cartItems;
 //    
     
     
@@ -105,8 +105,10 @@ public class UserModel {
 		return profile;
 	}
 
-//	public List<Cart> getCartItems() {
-//		// TODO Auto-generated method stub
-//		return cartItems;
-//	}
+
+
+	public List<Cart> getCartItems() {
+		// TODO Auto-generated method stub
+		return cartItems;
+	}
 }

@@ -21,6 +21,9 @@ import com.example.demo.response.SuccessResponse;
 import com.example.demo.service.CartServices;
 import com.example.demo.service.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import jdk.jfr.Description;
+
 
 
 @RestController
@@ -40,7 +43,7 @@ public class UserCart {
 	}
 	@GetMapping("/getcartitem")
 	
-	public ResponseEntity<ErrorResponse> GetCartItem(@RequestParam("userid") long userid) {
+	public ResponseEntity<?> GetCartItem(@RequestParam("userid") long userid) {
 		
 		
 		
@@ -63,6 +66,25 @@ public class UserCart {
 		
 		System.err.println(userid);
 		return userService.GetUserInfo_profile(userid);
+	}
+	
+	
+	
+	@Operation(
+			
+			summary = "get all user and there cart products"
+			)
+	
+	@GetMapping("/all/user/order")
+	
+	
+	
+	public ResponseEntity<?> GetUers_order(){
+		
+		
+		
+		
+		return AddtoCart.getUserorder_services();
 	}
 	
 	

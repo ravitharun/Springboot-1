@@ -1,18 +1,19 @@
 package com.example.demo.service;
 
-import java.util.HashMap;
+//import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+//import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+//import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Repository.RepoCart;
 import com.example.demo.Repository.UserRepository;
 import com.example.demo.model.Cart;
-import com.example.demo.model.OrderModel;
+//import com.example.demo.model.OrderModel;
 import com.example.demo.model.UserModel;
 import com.example.demo.response.CartDto;
 import com.example.demo.response.ErrorResponse;
@@ -22,6 +23,9 @@ import com.example.demo.response.SuccessResponse;
 public class CartServices {
 	@Autowired 
 	private RepoCart repoTOcart;
+	
+	@Autowired
+	private UserRepository userrepo;
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -47,7 +51,7 @@ public class CartServices {
 	
 	
 
-	public ResponseEntity<ErrorResponse> getUserCartItems(long userid) {
+	public ResponseEntity<?> getUserCartItems(long userid) {
 
 		
 		ErrorResponse err=new ErrorResponse();
@@ -61,12 +65,22 @@ public class CartServices {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	    }
 
-//	    List<Cart> cartItems = user.getCartItems();
-//	    Map<K, V> response=new HashMap<>();
+	    List<Cart> cartItems = user.getCartItems();
 
 //	    return ResponseEntity.ok(cartItems);
-	    return ResponseEntity.status(HttpStatus.OK).body(null);
+	    return ResponseEntity.status(HttpStatus.OK).body(cartItems);
 	    
+	}
+	
+	
+	public ResponseEntity<?> getUserorder_services(){
+		
+		
+		List<UserModel> user_order_data = userrepo.findUsersWithOrders();
+		
+		
+		
+		return ResponseEntity.status(HttpStatus.OK).body(user_order_data);
 	}
 
 

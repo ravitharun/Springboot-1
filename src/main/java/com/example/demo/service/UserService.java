@@ -19,6 +19,7 @@ import com.example.demo.exception.UserAge;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.model.UserModel;
 import com.example.demo.model.UserProfileModel;
+import com.example.demo.response.DtoProjection;
 import com.example.demo.response.ProfileCreationDto;
 import  com.example.demo.response.SuccessResponse;
 import com.example.demo.response.UserDto;
@@ -277,5 +278,19 @@ if(user==null) {
     resp.put("messages", profile);
 
     return ResponseEntity.status(HttpStatus.OK).body(resp);
+}
+
+
+
+// get data based on the Dto Projection
+
+
+public 	List<DtoProjection> get(){
+	List<DtoProjection> data=userRepo.getRequiredData();
+
+	for(DtoProjection datas:data) {
+		System.err.println(datas.getUsername());
+	}
+	return data;
 }
 }

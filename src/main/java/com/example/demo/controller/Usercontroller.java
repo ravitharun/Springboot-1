@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.UserModel;
+import com.example.demo.response.DtoProjection;
 import com.example.demo.response.SuccessResponse;
 import com.example.demo.service.UserService;
 
@@ -77,5 +79,14 @@ public class Usercontroller {
 		
 			    	return userService.userEmailCheck(userid);
 			    	
+			    }
+			    
+			    
+			    @GetMapping("/usedtoproject")
+			    
+			    public 	List<DtoProjection> getuserDto(){
+			    	
+			    	
+			    	return userService.get();
 			    }
 }
