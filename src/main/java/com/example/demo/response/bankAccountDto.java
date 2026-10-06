@@ -1,5 +1,6 @@
 package com.example.demo.response;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class bankAccountDto {
 
@@ -7,6 +8,7 @@ public class bankAccountDto {
 	
 	private long user_id;
 	private int Account_number;
+	@Schema(description = "Current account balance")
 	private double balance;
 	private String BackName;
 	private String AccountHoldername;
